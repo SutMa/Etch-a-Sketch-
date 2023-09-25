@@ -1,3 +1,31 @@
-.container{
-    
+body{
+    background-color: darkgray;
 }
+#container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#sketchContainer{
+    background-color: white;
+    width: 700px;
+    height: 700px;
+    margin-top: 10px;
+    display: grid;
+    grid-template-rows: repeat(16, 1fr);
+    grid-template-columns: repeat(16, 1fr);
+    gap: 1px;
+}
+
+#buttonHolder{
+    margin-top: 10px;
+}
+
+button{
+    padding: 10px;
+    border: none;
+}
+
+
