@@ -4,32 +4,70 @@ let inputButton = document.getElementById('inputButton');
 let resetButton = document.getElementById('resetButton');
 
 function reset(){
-    gridSize = 16;
-    makeGridSize(gridSize);
+    makeGrid(16);
 }
 
-function clearGrid(){
+function makeGrid(input) {
+    // Clear the container before creating the new grid
+    sketchContainer.innerHTML = '';
 
-}
+    // Calculate the number of rows and columns
+    const numRows = input;
+    const numColumns = input;
 
-function makeGrid(input){
-    for (let i = 0; i < input; i++) {
-        for(let j = 0; j < input; j++) {
-            const gridItem = document.createElement('div');
-            gridItem.classList.add('grid-item');
-            gridItem.style.border = '1px solid black'
-            sketchContainer.appendChild(gridItem);
-            
-        }
+    // Set the container's dimensions and style
+    sketchContainer.style.display = 'grid';
+    sketchContainer.style.gridTemplateColumns = `repeat(${numColumns}, 1fr)`;
+    sketchContainer.style.gridTemplateRows = `repeat(${numRows}, 1fr)`;
+
+    // Create the grid
+    for (let i = 0; i < numRows * numColumns; i++) {
+        const gridItem = document.createElement('div');
+        gridItem.classList.add('grid-item');
+        gridItem.style.border = '1px solid black';
+        sketchContainer.appendChild(gridItem);
     }
 }
 
 
-let gridSize = 16;
-makeGrid(gridSize);
+function getUserInput(){
+    let userIput = window.prompt('Please enter the size of the grid you want to display')
+    userInput = parseInt(userIput);
+    if(userInput>=100){
+        reset();
+        alert("Cannot go above 100");
+    } else{
+        makeGrid(userIput);
+    }
+}
 
 
-document.addEventListener("DOMContentLoaded", function(){
-    gridSize = 16;
-    makeGrid(gridSize);
-});
+makeGrid(16);
+
+resetButton.addEventListener('click', reset);
+inputButton.addEventListener('click', getUserInput);
+
+
+function addClickHandlers(){
+
+    let isDrawing = false;
+    sketchContainer.addEventListener('mousedown', () =>{
+        isDrawing = true;
+    });
+    document.addEventListener('mouseup', () =>{
+        isDrawing = false;
+    })
+    sketchContainer.addEventListener('mouseover', function (event){
+        if(isDrawing){
+            if (event.target.classList.contains('grid-item')){
+                event.target.style.backgroundColor = 'black';
+            }
+        }
+        
+    })
+
+}
+
+addClickHandlers();
+
+
